@@ -1,0 +1,10 @@
+.saved-movies{
+    background-color: rgba(32, 32, 32, 1);
+    padding: 0 70px 164px;
+    min-height: 700px;
+}
+@media screen and (max-width: 768px) {
+    .saved-movies{
+        padding: 0 30px 138px;
+    }
+}

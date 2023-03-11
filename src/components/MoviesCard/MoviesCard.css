@@ -1,0 +1,85 @@
+.movie {
+    background-color: rgba(34, 34, 34, 1);
+    max-width: 364px;
+    max-height: 271px;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        'title save'
+        'duration save'
+        'image image';
+    grid-template-columns: minmax(250px, 320px) 43px;
+    grid-template-rows: 19px 22px 217px;
+    align-items: end;
+}
+
+.movie__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    grid-area: title;
+    padding-left: 14px;
+}
+
+.movie__duration {
+    margin: 0;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #8B8B8B;
+    grid-area: duration;
+    padding-left: 14px;
+}
+
+.movie__thumbnail {
+    grid-area: image;
+    max-width: 364px;
+    width: 100%;
+}
+
+.movie__save {
+    grid-area: save;
+    align-self: center;
+}
+
+.movie__save_bookmark {
+    background-color: rgba(66, 66, 66, 1);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#bookmark path {
+    fill: #424242;
+    stroke: #fff;
+}
+
+#checkbox {
+    display: none;
+}
+
+#checkbox:checked~div #bookmark path {
+    fill: #fff;
+}
+
+#checkbox:checked~.movie__save_bookmark {
+    background-color: rgba(61, 220, 132, 1);
+}
+@media screen and (max-width: 768px) {
+    .movie{
+        grid-template-rows: 19px 22px 203px;
+    }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .movie{
+        max-width: 300px;
+        grid-template-rows: 19px 22px 182px;
+    }
+}

@@ -1,0 +1,27 @@
+import { Link } from 'react-router-dom';
+import './Profile.css';
+
+function Profile() {
+  return (
+    <section className='profile'>
+      <h1 className='profile__greeting'>Привет, Виталий!</h1>
+      <form className='profile__form'>
+        <label className='profile__form__lable'>
+          <span className='profile__form__hint'>Имя</span>
+          <input className='profile__form__input' placeholder='Имя'></input>
+        </label>
+        <hr className='profile__form__line'></hr>
+        <label className='profile__form__lable'>
+          <span className='profile__form__hint'>E-mail</span>
+          <input className='profile__form__input' placeholder='E-mail'></input>
+        </label>
+        <button className='profile__form__submit'>Редактировать</button>
+      </form>
+      <Link to='/' className='profile__link'>
+        Выйти из аккаунта
+      </Link>
+    </section>
+  );
+}
+
+export default Profile;
