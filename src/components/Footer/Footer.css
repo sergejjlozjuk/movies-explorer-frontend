@@ -56,6 +56,13 @@
     text-decoration: none;
 }
 
+@media screen and (min-width: 1279px) {
+    .footer {
+        grid-template-columns: minmax(100px, 550px) minmax(20px, 590px);
+        justify-content: center;
+    }
+}
+
 @media screen and (max-width: 890px) {
     .footer {
         padding: 0 30px 18px;

@@ -4,7 +4,6 @@ import icon from '../../images/account_icon.svg';
 
 function NavigationMain() {
   const location = useLocation().pathname;
-  console.log(location);
   function openBurger() {
     document.querySelector('.header').classList.toggle('active');
     document

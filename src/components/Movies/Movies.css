@@ -6,9 +6,10 @@
 
 .movies__button-more {
     padding: 0;
+    margin: auto;
     background-color: rgba(47, 47, 47, 1);
     border: none;
-    max-width: 100%;
+    max-width: 1140px;
     width: 100%;
     font-weight: 500;
     font-size: 12px;
@@ -23,7 +24,7 @@
 
 @media screen and (max-width: 768px) {
     .movies {
-        padding: 0 30px 102px;
+        padding: 0 30px 128px;
 
     }
 }

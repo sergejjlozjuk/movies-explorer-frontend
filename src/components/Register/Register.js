@@ -10,24 +10,13 @@ function Register() {
         buttonText='Войти'
         url='/signin'
         submitText='Зарегистрироваться'
+        formName='register'
       >
         <label className='form-auth__lable'>
           <span className='form-auth__hint'>Имя</span>
-          <input className='form-auth__input'></input>
+          <input name='name' className='form-auth__input' required></input>
           <hr className='form-auth__line'></hr>
-          <span className='form-auth__error'></span>
-        </label>
-        <label className='form-auth__lable'>
-          <span className='form-auth__hint'>E-mail</span>
-          <input className='form-auth__input'></input>
-          <hr className='form-auth__line'></hr>
-          <span className='form-auth__error'></span>
-        </label>
-        <label className='form-auth__lable'>
-          <span className='form-auth__hint'>Пароль</span>
-          <input className='form-auth__input' type='password'></input>
-          <hr className='form-auth__line'></hr>
-          <span className='form-auth__error'></span>
+          <span id='name' className='form-auth__error'></span>
         </label>
       </Formauth>
     </section>

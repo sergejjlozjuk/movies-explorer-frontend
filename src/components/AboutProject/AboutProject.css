@@ -127,6 +127,12 @@
     grid-area: fronttext;
     text-align: center;
 }
+@media screen and (min-width: 1279px) {
+    .about-project{
+        grid-template-columns: minmax(300px, 550px) minmax(300px, 550px);
+        justify-content: center;
+    }
+}
 
 @media screen and (max-width: 890px) {
     .about-project {

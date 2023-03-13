@@ -118,6 +118,15 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
+@media screen and (min-width: 1279px) {
+  .search {
+    justify-content: center;
+  }
+  .form{
+    margin-right: 40px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .search {
     flex-direction: column;
@@ -137,10 +146,11 @@ input:checked+.slider:before {
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .search{
+  .search {
     row-gap: 44px;
     padding-bottom: 43px;
   }
+
   .form__input {
     margin-left: 12px;
     font-weight: 400;
@@ -152,9 +162,11 @@ input:checked+.slider:before {
     width: 115px;
     margin-right: 5px;
   }
-  .checkbox{
+
+  .checkbox {
     max-width: 148px;
   }
+
   .checkbox__title {
     font-weight: 400;
     font-size: 11px;

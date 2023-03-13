@@ -1,10 +1,10 @@
 import './SearchForm.css';
 import search from '../../images/search.svg';
 
-function SearchForm() {
+function SearchForm({ formName }) {
   return (
     <section className='search'>
-      <form className='form'>
+      <form className='form' name={formName}>
         <input className='form__input' placeholder='Фильм'></input>
         <button className='form__button'>
           <img className='from__button_icon' src={search} alt='search' />

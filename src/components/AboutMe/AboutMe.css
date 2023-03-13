@@ -74,11 +74,17 @@
     justify-self: end;
     border-radius: 10px;
 }
-
+@media screen and (min-width: 1279px) {
+    .user{
+        grid-template-columns: minmax(300px, 590px) minmax(300px, 551px);
+        justify-content: center;
+    }
+}
 @media screen and (max-width: 890px) {
     .user {
         padding: 0 50px 60px;
         grid-template-rows: 118px 24px 106px 33px 112px 121px;
+        column-gap: 20px;
     }
 
     .user__name {

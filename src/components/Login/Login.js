@@ -10,20 +10,8 @@ function Login() {
         buttonText='Регистрация'
         url='/signup'
         submitText='Войти'
-      >
-        <label className='form-auth__lable'>
-          <span className='form-auth__hint'>E-mail</span>
-          <input className='form-auth__input'></input>
-          <hr className='form-auth__line'></hr>
-          <span className='form-auth__error'></span>
-        </label>
-        <label className='form-auth__lable'>
-          <span className='form-auth__hint'>Пароль</span>
-          <input className='form-auth__input' type='password'></input>
-          <hr className='form-auth__line'></hr>
-          <span className='form-auth__error'></span>
-        </label>
-      </Formauth>
+        formName='login'
+      ></Formauth>
     </section>
   );
 }

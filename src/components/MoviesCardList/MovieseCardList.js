@@ -15,9 +15,6 @@ function MoviesCardList() {
             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
             </li>
-            {/* <li className='all-movies__item'>
-                <MoviesCard></MoviesCard>
-            </li>
             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
             </li>
@@ -29,13 +26,16 @@ function MoviesCardList() {
             </li>
             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
-            </li> */}
-            {/* <li className='all-movies__item'>
+            </li>
+            <li className='all-movies__item'>
+                <MoviesCard></MoviesCard>
+            </li> 
+             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
             </li>
             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
-            </li> */}
+            </li>
             <li className='all-movies__item'>
                 <MoviesCard></MoviesCard>
             </li>
