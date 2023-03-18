@@ -1,0 +1,108 @@
+.footer {
+    background-color: rgba(32, 32, 32, 1);
+    padding: 0 70px 18px;
+    display: grid;
+    grid-template-areas:
+        'header header'
+        'line line'
+        'date links';
+    align-items: end;
+    grid-template-rows: 48px 22px 36px;
+    grid-template-columns: minmax(100px, 550px) minmax(20px, 700px);
+}
+
+.footer__header {
+    margin: 0;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #8B8B8B;
+    grid-area: header;
+    justify-self: center;
+}
+
+.footer__line {
+    margin: 0;
+    color: #424242;
+    grid-area: line;
+}
+
+.footer__date {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    grid-area: date;
+}
+
+.footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    grid-area: links;
+    justify-self: end;
+    width: 182px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__item {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.footer__link {
+    color: #fff;
+    text-decoration: none;
+}
+
+@media screen and (min-width: 1279px) {
+    .footer {
+        grid-template-columns: minmax(100px, 550px) minmax(20px, 590px);
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .footer {
+        padding: 0 30px 18px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+    .footer {
+        padding: 0 11px 18px;
+        grid-template-areas:
+            'header'
+            'line'
+            'links'
+            'date';
+        grid-template-columns: 1fr;
+        grid-template-rows: 32px 22px 72px 46px;
+    }
+
+    .footer__header {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .footer__date {
+        text-align: center;
+    }
+
+    .footer__list {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        justify-self: center;
+        row-gap: 11px;
+    }
+
+    .footer__link,
+    .footer__date {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

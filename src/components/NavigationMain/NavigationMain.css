@@ -1,0 +1,209 @@
+.burger__container {
+    width: 100%;
+}
+
+.navigation-main {
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-items: end;
+}
+
+.navigation-main__link {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    color: #fff;
+}
+
+.navigation-main__link_film {
+    padding-right: 14px;
+}
+
+.navigation-main__link_saved-film {
+    justify-self: start;
+    padding-left: 3px;
+}
+
+.navigation-main__link_account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85px;
+    padding-right: 3px;
+}
+
+.navigation-main__link_account-image {
+    border-radius: 50%;
+    background-color: rgba(49, 49, 49, 1);
+    width: 26px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigation-main__link_home {
+    display: none;
+}
+
+.burger__button {
+    display: none;
+}
+
+
+.navigation-main__item {
+    display: flex;
+    justify-content: center;
+}
+
+.navigation-main__container {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-items: end;
+    grid-template-columns: 0px minmax(50px, 152px) 145px minmax(106px, 1000px);
+}
+
+@media screen and (max-width: 768px) {
+    .link_active{
+        border-bottom: 2px solid #fff;
+    }
+    .navigation-main {
+        display: block;
+    }
+
+    .navigation-main__container {
+        text-align: center;
+        row-gap: 28px;
+        grid-template-rows: 181px 22px 22px minmax(200px, 715px);
+        align-items: end;
+        height: 100vh;
+        justify-items: center;
+        grid-template-columns: auto;
+    }
+
+    .burger__button {
+        display: block;
+        position: absolute;
+        width: 28px;
+        height: 23px;
+        top: 26px;
+        right: 38px;
+    }
+
+    .burger__button::after,
+    .burger__button::before {
+        content: '';
+        background-color: #fff;
+        height: 3px;
+        position: absolute;
+        width: 100%;
+        transition: 1s;
+        opacity: 1;
+    }
+
+    .burger__button::before {
+        top: 0;
+    }
+
+    .burger__button.active::before {
+        transform: rotate(45deg) translateY(-5px) translateX(19px);
+        width: 22px;
+    }
+
+    .burger__button.active::after {
+        transform: rotate(-45deg) translateY(5px) translateX(19px);
+        width: 22px;
+    }
+    .burger__button.active span{
+        transform: scale(0);
+    }
+
+    .burger__button::after {
+        bottom: 0;
+    }
+
+    .burger__button span {
+        background-color: #fff;
+        position: absolute;
+        height: 3px;
+        top: 10px;
+        width: 100%;
+        transition: 1s;
+    }
+
+    .burger__container {
+        max-width: 520px;
+        z-index: 3;
+        background: rgba(32, 32, 32, 1);
+        position: absolute;
+        right: 0;
+        height: 74px;
+        overflow: hidden;
+        transition: 1s;
+    }
+
+    .burger__container_active {
+        height: 100%;
+        overflow: auto;
+    }
+
+    .navigation-main__link {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .navigation-main__link_home {
+        display: block;
+    }
+
+    .navigation-main__link_account {
+        padding: 0 0 93px;
+        padding-left: 8px;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 12px;
+    }
+
+    .navigation-main__link_film {
+        padding: 0;
+    }
+
+    .navigation-main__link_saved-film {
+        padding: 0;
+    }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+    .burger__button{
+        width: 22px;
+        height: 22px;
+        top: 26px;
+        right: 23px;
+    }
+    .burger__button::before,
+    .burger__button::after{
+        height: 2.5px;
+    }
+    .burger__button::before{
+        top: 1px;
+    }
+    .burger__button.active::before {
+        transform: rotate(45deg) translateY(-3px) translateX(4px);
+        width: 22px;
+    }
+
+    .burger__button.active::after {
+        transform: rotate(-45deg) translateY(-9px) translateX(16px);
+        width: 22px;
+    }
+    .burger__button.active span{
+        transform: scale(0);
+    }
+}

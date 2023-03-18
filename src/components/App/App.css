@@ -1,0 +1,16 @@
+.App {
+  margin: auto;
+  font-family: 'Inter',  ‘Arial’, sans-serif;
+  font-style: normal;
+  color: #fff;
+}
+a:hover{
+  opacity: .4;
+}
+button:hover{
+  cursor: pointer;
+  opacity: .4;
+}
+input:focus{
+  outline: 2px groove green;
+}
