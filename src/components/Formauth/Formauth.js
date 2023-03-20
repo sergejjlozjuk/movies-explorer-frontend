@@ -10,6 +10,8 @@ function Formauth({
   url,
   submitText,
   formName,
+  submit,
+  getValue,
 }) {
   useEffect(() => {
     const validation = new FormValidation();
@@ -17,16 +19,24 @@ function Formauth({
     return () => {
       validation.disableValidation();
     };
-  });
+  }, [formName]);
   return (
     <>
-      <form className='form-auth' name={formName}>
+      <form className='form-auth' name={formName} onSubmit={submit}>
         {children}
         <label className='form-auth__lable'>
           <span className='form-auth__hint'>E-mail</span>
-          <input name='Email' className='form-auth__input' required></input>
+          <input
+            name='email'
+            className='form-auth__input'
+            required
+            onChange={getValue}
+            type='email'
+            pattern='[a-z]+@[a-z]+\.[a-z]+'
+            placeholder='name@mail.com'
+          ></input>
           <hr className='form-auth__line'></hr>
-          <span id='Email' className='form-auth__error'></span>
+          <span id='email' className='form-auth__error'></span>
         </label>
         <label className='form-auth__lable'>
           <span className='form-auth__hint'>Пароль</span>
@@ -35,11 +45,14 @@ function Formauth({
             className='form-auth__input'
             type='password'
             required
+            onChange={getValue}
           ></input>
           <hr className='form-auth__line'></hr>
           <span id='password' className='form-auth__error'></span>
         </label>
-        <button className='form-auth__submit'>{submitText}</button>
+        <button className='form-auth__submit' type='submit'>
+          {submitText}
+        </button>
       </form>
       <span className='form-auth__link'>
         {linkText}

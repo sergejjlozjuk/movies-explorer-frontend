@@ -3,7 +3,7 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './MoviesLayout.css';
 
-function MoviesLayout() {
+function MoviesLayout({ logged }) {
   return (
     <>
       <Header headerClassName='header_movies' />

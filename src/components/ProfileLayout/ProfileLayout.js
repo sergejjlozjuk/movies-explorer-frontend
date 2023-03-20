@@ -1,15 +1,13 @@
-import './ProfileLayout.css'
-import Header from "../Header/Header";
-import Profile from "../Profile/Profile";
+import './ProfileLayout.css';
+import Header from '../Header/Header';
+import Profile from '../Profile/Profile';
 
-
-function ProfileLayout() {
+function ProfileLayout({ setLogged }) {
     return (
       <>
         <Header headerClassName='header_movies' />
-        <Profile/>
+        <Profile setLogged={setLogged} />
       </>
     );
-  }
-  export default ProfileLayout;
-  
+}
+export default ProfileLayout;

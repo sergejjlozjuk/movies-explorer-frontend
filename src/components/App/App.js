@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Movies from '../Movies/Movies';
@@ -9,26 +10,67 @@ import MainLayout from '../MainLayout/MainLayout';
 import MoviesLayout from '../MoviesLayout/MoviesLayout';
 import AuthLayout from '../AuthLayout/AuthLayout';
 import NotFound from '../NotFound/NotFound';
+import ProtectedRoutes from '../HOC/ProtectedRoutes';
 import ProfileLayout from '../ProfileLayout/ProfileLayout';
+import { AuthProvider } from '../HOC/AuthProvider';
+import api from '../../utils/MainApi';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
+  const [logged, setLogged] = useState(false);
+  const [preloader, setPreloader] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    setPreloader(false);
+    api
+      .checkToken()
+      .then((res) => {
+        if (res) {
+          setLogged(true);
+          navigate(location.pathname);
+        }
+      })
+      .catch(err => console.log(err))
+      .finally(() => setPreloader(true));
+  }, []);
   return (
     <div className='App'>
-      <Routes>
-        <Route path='/profile' element={<ProfileLayout />} />
-        <Route path='/' element={<MainLayout />}>
-          <Route index element={<Main />} />
-        </Route>
-        <Route path='/' element={<MoviesLayout />}>
-          <Route path='movies' element={<Movies />} />
-          <Route path='saved-movies' element={<SavedMovies />} />
-        </Route>
-        <Route path='/' element={<AuthLayout />}>
-          <Route path='signin' element={<Login />} />
-          <Route path='signup' element={<Register />} />
-        </Route>
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <AuthProvider logged={logged}>
+        <Preloader hidden={preloader} />
+        <Routes>
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoutes
+                setLogged={setLogged}
+                logged={logged}
+                element={ProfileLayout}
+              />
+            }
+          />
+          <Route path='/' element={<MoviesLayout logged={logged} />}>
+            <Route
+              path='movies'
+              element={<ProtectedRoutes element={Movies} logged={logged} />}
+            />
+            <Route
+              path='saved-movies'
+              element={
+                <ProtectedRoutes element={SavedMovies} logged={logged} />
+              }
+            />
+          </Route>
+          <Route path='/' element={<MainLayout />}>
+            <Route index element={<Main />} />
+          </Route>
+          <Route path='/' element={<AuthLayout />}>
+            <Route path='signin' element={<Login setLogged={setLogged} />} />
+            <Route path='signup' element={<Register />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }
