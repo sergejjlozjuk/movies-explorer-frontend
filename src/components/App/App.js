@@ -19,21 +19,21 @@ import Preloader from '../Preloader/Preloader';
 function App() {
   const [logged, setLogged] = useState(false);
   const [preloader, setPreloader] = useState(true);
-  const location = useLocation();
+  const location = useLocation()
   const navigate = useNavigate();
-  useEffect(() => {
+  useEffect(()=>{
     setPreloader(false);
     api
       .checkToken()
       .then((res) => {
         if (res) {
           setLogged(true);
-          navigate(location.pathname);
+          navigate(location.pathname)
         }
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
       .finally(() => setPreloader(true));
-  }, []);
+  }, [])
   return (
     <div className='App'>
       <AuthProvider logged={logged}>
@@ -57,7 +57,11 @@ function App() {
             <Route
               path='saved-movies'
               element={
-                <ProtectedRoutes element={SavedMovies} logged={logged} />
+                <ProtectedRoutes
+                  element={SavedMovies}
+                  logged={logged}
+                  setPreloader={setPreloader}
+                />
               }
             />
           </Route>

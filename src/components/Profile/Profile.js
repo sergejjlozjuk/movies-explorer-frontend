@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../HOC/AuthProvider';
 
 function Profile({ setLogged }) {
-  const user = useContext(AuthContext);
+  const {user, signout} = useContext(AuthContext);
   const nav = useNavigate();
   useEffect(() => {
     const validation = new FormValidation();
@@ -21,6 +21,7 @@ function Profile({ setLogged }) {
       .then((res) => {
         setLogged(false);
         nav('/')
+        signout()
         console.log(res);
       })
       .catch((err) => console.log(err));

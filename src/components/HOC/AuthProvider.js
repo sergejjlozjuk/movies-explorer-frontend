@@ -6,8 +6,10 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children, logged }) => {
   const [user, setUser] = useState({});
+  function signout (){
+    setUser({})
+  }
   useEffect(() => {
-    if(logged)
     api
       .checkToken()
       .then((res) => {
@@ -15,5 +17,6 @@ export const AuthProvider = ({ children, logged }) => {
       })
       .catch((err) => console.log(err));
   }, [logged]);
-    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+  const value = {user, logged, signout}
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

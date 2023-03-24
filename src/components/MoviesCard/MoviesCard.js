@@ -1,32 +1,89 @@
 import './MoviesCard.css';
 import film from '../../images/film.png';
+import api from '../../utils/MainApi';
+import { useEffect, useState } from 'react';
 
-function MoviesCard() {
+function MoviesCard({ card }) {
+  const [savedFilms, setSavedFilms] = useState([]);
+  const [savedMovie, setSavedMovie] = useState(false);
+  useEffect(() => {
+    api
+      .getSavedMovies()
+      .then((res) => setSavedFilms(res))
+      .catch((err) => console.log(err));
+    savedFilms.find((film) => film.movieId === card.id) || card.owner
+      ? setSavedMovie(true)
+      : setSavedMovie(false);
+  }, [savedFilms, card]);
+  let image;
+  card._id
+    ? (image = card.image)
+    : (image = `https://api.nomoreparties.co/${card.image.url}`);
+  function calcDuration() {
+    const h = Math.round(card.duration / 60);
+    const m = card.duration % 60;
+    return `${h ? `${h} ч` : ''} ${m} м`;
+  }
+  function handlerSave() {
+    if (savedMovie) {
+      api
+        .deleteMovie(card)
+        .then((res) => {
+          if (res) {
+            setSavedMovie(!savedMovie);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .saveMovie(card)
+        .then((res) => {
+          if (res) {
+            setSavedMovie(!savedMovie);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+  function handlerThumbNail() {
+    window.open(card.trailerLink, '_blank');
+  }
   return (
-    <article className='movie'>
-      <h1 className='movie__title'>33 слова о дизайне</h1>
-      <h3 className='movie__duration'>1ч 47м</h3>
-      <label className='movie__save' id='label'>
-        <input type='checkbox' id='checkbox'></input>
-        <div className='movie__save_bookmark'>
-          <svg
-            id='bookmark'
-            width='10'
-            height='14'
-            viewBox='0 0 10 14'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              d='M0.5 1.9C0.5 1.40294 0.902944 1 1.4 1H8.6C9.09706 1 9.5 1.40294 9.5 1.9V12.4789C9.5 12.5552 9.41798 12.6034 9.35133 12.5662L6.21676 10.8198C5.46033 10.3984 4.53968 10.3984 3.78324 10.8198L0.648671 12.5662C0.582015 12.6034 0.5 12.5552 0.5 12.4789V1.9Z'
-              stroke='#424242'
-            />
-          </svg>
-        </div>
-      </label>
-
-      <img className='movie__thumbnail' src={film} alt={film} />
-    </article>
+    <li className='all-movies__item'>
+      <article className='movie'>
+        <h1 className='movie__title'>{card.nameRU}</h1>
+        <h3 className='movie__duration'>{calcDuration()}</h3>
+        <label className='movie__save' id='label'>
+          <input
+            type='checkbox'
+            id='checkbox'
+            checked={savedMovie}
+            onChange={handlerSave}
+          ></input>
+          <div className='movie__save_bookmark'>
+            <svg
+              id='bookmark'
+              width='10'
+              height='14'
+              viewBox='0 0 10 14'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M0.5 1.9C0.5 1.40294 0.902944 1 1.4 1H8.6C9.09706 1 9.5 1.40294 9.5 1.9V12.4789C9.5 12.5552 9.41798 12.6034 9.35133 12.5662L6.21676 10.8198C5.46033 10.3984 4.53968 10.3984 3.78324 10.8198L0.648671 12.5662C0.582015 12.6034 0.5 12.5552 0.5 12.4789V1.9Z'
+                stroke='#424242'
+              />
+            </svg>
+          </div>
+        </label>
+        <img
+          className='movie__thumbnail'
+          src={image}
+          alt={film}
+          onClick={handlerThumbNail}
+        />
+      </article>
+    </li>
   );
 }
 export default MoviesCard;

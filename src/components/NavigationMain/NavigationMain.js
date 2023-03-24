@@ -22,6 +22,7 @@ function NavigationMain() {
             <Link
               to='/'
               className='navigation-main__link navigation-main__link_home'
+              onClick={openBurger}
             >
               Главная
             </Link>
@@ -32,6 +33,7 @@ function NavigationMain() {
               className={`navigation-main__link navigation-main__link_film ${
                 location === '/movies' ? 'link_active' : ''
               }`}
+              onClick={openBurger}
             >
               Фильмы
             </Link>
@@ -42,6 +44,7 @@ function NavigationMain() {
               className={`navigation-main__link navigation-main__link_saved-film ${
                 location === '/saved-movies' ? 'link_active' : ''
               }`}
+              onClick={openBurger}
             >
               Сохраненные фильмы
             </Link>

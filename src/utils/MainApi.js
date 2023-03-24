@@ -38,23 +38,75 @@ class Api {
       }),
     }).then(this._getResponse);
   }
-  logout(){
+  logout() {
     return this._request('/signout', {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    }).then(this._getResponse)
-  }
-  checkToken(){
-    return this._request('/users/me', {
-      method: 'GET',
-      headers:{
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
+    }).then(this._getResponse);
+  }
+  checkToken() {
+    return this._request('/users/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    }).then(this._getResponse);
+  }
+  saveMovie(movie) {
+    const {
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      id,
+      nameRU,
+      nameEN,
+    } = movie;
+    return this._request('/movies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image: `https://api.nomoreparties.co${image.url}`,
+        trailerLink,
+        thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
+        movieId: id,
+        nameRU,
+        nameEN,
+      }),
+      credentials: 'include',
+    }).then(this._getResponse);
+  }
+  getSavedMovies () {
+    return this._request('/movies', {
+      method:'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
     }).then(this._getResponse)
+  }
+  deleteMovie(card){
+    return this._request(`/movies/${card._id}`, {
+      method:'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
   }
 }
 const api = new Api();
