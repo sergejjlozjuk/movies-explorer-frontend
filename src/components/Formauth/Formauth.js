@@ -32,7 +32,7 @@ function Formauth({
             required
             onChange={getValue}
             type='email'
-            pattern='[a-z]+@[a-z]+\.[a-z]+'
+            pattern='.+@[A-Za-z]*\.[a-z]{2,4}'
             placeholder='name@mail.com'
           ></input>
           <hr className='form-auth__line'></hr>
@@ -50,6 +50,7 @@ function Formauth({
           <hr className='form-auth__line'></hr>
           <span id='password' className='form-auth__error'></span>
         </label>
+        <span className='form-auth__submit-error'></span>
         <button className='form-auth__submit' type='submit'>
           {submitText}
         </button>

@@ -38,9 +38,6 @@ function Movies() {
   useEffect(() => {
     setRenderedFilms(filteredFilms.slice(0, listView.list));
   }, [filteredFilms, listView]);
-  useEffect(()=>{
-    setFilteredFilms(JSON.parse(localStorage.getItem('filtered')))
-  }, [])
   function resizeWindow() {
     setWidth(window.innerWidth);
   }

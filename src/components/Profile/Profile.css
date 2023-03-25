@@ -16,8 +16,9 @@
 }
 
 .profile__form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 15px 17px 31px 220px 14px;
+    align-items: end;
     max-width: 410px;
     width: 100%;
     max-width: 410px;
@@ -26,10 +27,14 @@
 
 .profile__form__lable {
     border: none;
-    display: flex;
+    display: grid;
+    grid-template-areas:
+        'hint input'
+        'error error';
 }
 
 .profile__form__hint {
+    grid-area: hint;
     font-weight: 500;
     font-size: 11px;
     width: 100%;
@@ -38,6 +43,7 @@
 }
 
 .profile__form__input {
+    grid-area: input;
     padding: 0;
     font-weight: 400;
     font-size: 11px;
@@ -46,10 +52,30 @@
     background: none;
     border: none;
     width: 100%;
+    color: #fff;
+}
+
+.profile__form__input-error {
+    grid-area: error;
+    color: #f00;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    align-self: end;
+    text-align: center;
+}
+
+.profile__form-error {
+    color: #f00;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 12px;
+    align-self: end;
+    text-align: center;
 }
 
 .profile__form__line {
-    margin: 17px 0;
+    margin: 0;
     max-width: 410px;
     width: 100%;
 }
@@ -61,10 +87,17 @@
     background: none;
     color: #fff;
     padding: 0;
-    margin-top: 220px;
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;
+    width: fit-content;
+    align-self: center;
+    justify-self: center;
+}
+
+.submit_disable {
+    color: #f00;
+    opacity: .5;
 }
 
 .profile__link {
@@ -83,12 +116,10 @@
     }
 
     .profile__form {
-        padding: 36px 0 17px;
+        padding: 36px 0 6px;
+        grid-template-rows: 15px 17px 31px 200px 34px;
     }
 
-    .profile__form__submit {
-        margin-top: 210px;
-    }
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -98,10 +129,7 @@
 
     .profile__form {
         padding-top: 19px;
-    }
-
-    .profile__form__submit {
-        margin-top: 380px;
+        grid-template-rows: 15px 17px 31px 370px 34px;
     }
 
     .profile__form__submit,

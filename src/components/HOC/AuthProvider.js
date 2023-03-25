@@ -9,6 +9,9 @@ export const AuthProvider = ({ children, logged }) => {
   function signout (){
     setUser({})
   }
+  function setNewUser (data) {
+    setUser(data)
+  }
   useEffect(() => {
     api
       .checkToken()
@@ -17,6 +20,6 @@ export const AuthProvider = ({ children, logged }) => {
       })
       .catch((err) => console.log(err));
   }, [logged]);
-  const value = {user, logged, signout}
+  const value = {user, logged, signout, setNewUser}
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/MainApi';
 import Formauth from '../Formauth/Formauth';
-import Preloader from '../Preloader/Preloader';
 import './Register.css';
 
-function Register() {
+function Register({ setPreloader, setLogged }) {
   const nav = useNavigate();
-  const [preloader, setPreloader] = useState(true);
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -23,25 +21,35 @@ function Register() {
   function handleRegistration(e) {
     setPreloader(false);
     e.preventDefault();
+    const form = e.target;
+    const formError = form.querySelector('.form-auth__submit-error');
     api
       .registration(data)
-      .then(() =>
-        api
-          .login(data)
-          .then(() => nav('/movies'))
-          .catch((err) => {
-            setPreloader(true);
-            console.log(err);
-          })
-      )
+      .then((res) => {
+        if (res) {
+          api
+            .login(data)
+            .then((res) => {
+              if (res) {
+                setLogged(true)
+                nav('/movies');
+              }
+            })
+            .catch((err) => err);
+        }
+      })
       .catch((err) => {
-        setPreloader(true);
-        console.log(err);
-      });
+        if (err === 400) {
+          formError.textContent = 'Введены некорректные данные';
+        }
+        if (err === 409) {
+          formError.textContent = 'Этот Email уже зарегистрирован';
+        }
+      })
+      .finally(setPreloader(true));
   }
   return (
     <section className='register'>
-      <Preloader hidden={preloader} />
       <h1 className='register__title'>Добро пожаловать!</h1>
       <Formauth
         linkText='Уже зарегистрированы?'
@@ -59,6 +67,7 @@ function Register() {
             className='form-auth__input'
             required
             onChange={getValue}
+            pattern='[A-Za-zА-Яа-яЁё\s\-]{3,30}'
           ></input>
           <hr className='form-auth__line'></hr>
           <span id='name' className='form-auth__error'></span>

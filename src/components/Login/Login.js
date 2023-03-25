@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/MainApi';
 import Formauth from '../Formauth/Formauth';
-import Preloader from '../Preloader/Preloader';
 import './Login.css';
 
-function Login({ setLogged }) {
+function Login({ setLogged, setPreloader }) {
   const nav = useNavigate();
-  const [preloader, setPreloader] = useState(true);
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -22,21 +20,24 @@ function Login({ setLogged }) {
   function handleAuthorization(e) {
     setPreloader(false);
     e.preventDefault();
+    const formError = e.target.querySelector('.form-auth__submit-error');
     api
       .login(data)
       .then((res) => {
-        console.log(res);
-        setLogged(true);
-        nav('/movies');
+        if(res) {
+          setLogged(true)
+          nav('/movies');
+        }
       })
       .catch((err) => {
-        setPreloader(true);
-        console.log(err);
-      });
+        if(err === 401) {
+          formError.textContent = 'Неверный Email или пароль'
+        }
+      })
+      .finally(setPreloader(true))
   }
   return (
     <section className='login'>
-      <Preloader hidden={preloader} />
       <h1 className='login__title'>Рады видеть!</h1>
       <Formauth
         linkText='Ещё не зарегистрированы?'

@@ -4,11 +4,12 @@
     height: 100%;
     align-self: center;
     display: grid;
-    grid-template-rows: 69px 69px 69px 173px;
+    grid-template-rows: 69px 69px 162px 20px 60px;
     grid-template-areas:
         'input'
         'input'
         'input'
+        'form-error'
         'submit';
 }
 
@@ -60,7 +61,15 @@
     align-self: end;
     grid-area: submit;
 }
-
+.form-auth__submit-error{
+    grid-area: form-error;
+    color: #f00;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    align-self: end;
+    text-align: center;
+}
 .form-auth__link {
     align-self: end;
     text-align: center;
@@ -81,11 +90,12 @@
 }
 .submit_disable{
     background-color: gray;
+    color: #f00;
 }
 @media screen and (min-width: 320px) and (max-width: 767px) {
     .form-auth {
         padding-top: 80px;
-        grid-template-rows: 69px 69px 69px 261px;
+        grid-template-rows: 69px 69px 69px 201px 60px;
     }
 
     .form-auth__submit {

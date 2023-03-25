@@ -3,7 +3,7 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res.status);
   }
   _request(url, options) {
     return fetch(
@@ -56,6 +56,20 @@ class Api {
       credentials: 'include',
     }).then(this._getResponse);
   }
+  updateUser(data) {
+    const { name, email } = data;
+    return this._request('/users/me', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        name,
+        email,
+      }),
+    }).then(this._getResponse);
+  }
   saveMovie(movie) {
     const {
       country,
@@ -90,23 +104,24 @@ class Api {
       credentials: 'include',
     }).then(this._getResponse);
   }
-  getSavedMovies () {
+  getSavedMovies() {
     return this._request('/movies', {
-      method:'GET',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include'
-    }).then(this._getResponse)
+      credentials: 'include',
+    }).then(this._getResponse);
   }
-  deleteMovie(card){
-    return this._request(`/movies/${card._id}`, {
-      method:'DELETE',
+  deleteMovie(card) {
+    console.log(card.movieId);
+    return this._request(`/movies/${card.movieId || card.id}`, {
+      method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      credentials: 'include'
-    })
+      credentials: 'include',
+    });
   }
 }
 const api = new Api();
