@@ -15,6 +15,7 @@ import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import { AuthProvider } from '../HOC/AuthProvider';
 import api from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
+import moviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [logged, setLogged] = useState(false);
@@ -34,6 +35,16 @@ function App() {
       .catch((err) => console.log(err))
       .finally(() => setPreloader(true));
   }, []);
+  useEffect(() => {
+    moviesApi
+      .get()
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('films', JSON.stringify(res));
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [logged]);
   return (
     <>
       <Preloader hidden={preloader} />
@@ -70,8 +81,26 @@ function App() {
               <Route index element={<Main />} />
             </Route>
             <Route path='/' element={<AuthLayout />}>
-              <Route path='signin' element={<Login setLogged={setLogged}  setPreloader={setPreloader}/>} />
-              <Route path='signup' element={<Register setLogged={setLogged} setPreloader={setPreloader}/>} />
+              <Route
+                path='signin'
+                element={
+                  <Login
+                    setLogged={setLogged}
+                    setPreloader={setPreloader}
+                    logged={logged}
+                  />
+                }
+              />
+              <Route
+                path='signup'
+                element={
+                  <Register
+                    setLogged={setLogged}
+                    setPreloader={setPreloader}
+                    logged={logged}
+                  />
+                }
+              />
             </Route>
             <Route path='*' element={<NotFound />} />
           </Routes>

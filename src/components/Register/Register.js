@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import api from '../../utils/MainApi';
 import Formauth from '../Formauth/Formauth';
 import './Register.css';
 
-function Register({ setPreloader, setLogged }) {
+function Register({ setPreloader, setLogged, logged }) {
   const nav = useNavigate();
   const [data, setData] = useState({
     name: '',
@@ -31,7 +31,7 @@ function Register({ setPreloader, setLogged }) {
             .login(data)
             .then((res) => {
               if (res) {
-                setLogged(true)
+                setLogged(true);
                 nav('/movies');
               }
             })
@@ -48,7 +48,9 @@ function Register({ setPreloader, setLogged }) {
       })
       .finally(setPreloader(true));
   }
-  return (
+  return logged ? (
+    <Navigate to={'/'} replace/>
+  ) : (
     <section className='register'>
       <h1 className='register__title'>Добро пожаловать!</h1>
       <Formauth

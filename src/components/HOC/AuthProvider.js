@@ -8,6 +8,10 @@ export const AuthProvider = ({ children, logged }) => {
   const [user, setUser] = useState({});
   function signout (){
     setUser({})
+    localStorage.removeItem('savedMovies')
+    localStorage.removeItem('searchParams')
+    localStorage.removeItem('filtered')
+    localStorage.removeItem('films')
   }
   function setNewUser (data) {
     setUser(data)

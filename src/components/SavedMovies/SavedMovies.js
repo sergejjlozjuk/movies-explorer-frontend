@@ -4,20 +4,26 @@ import SearchForm from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import api from '../../utils/MainApi';
 
-function SavedMovies({setPreloader}) {
-  const [savedMovies, setSavedMovies] = useState([])
-  useEffect(()=>{
+function SavedMovies({ setPreloader }) {
+  const [savedMovies, setSavedMovies] = useState([]);
+  useEffect(() => {
     setPreloader(false)
-    api.getSavedMovies()
-    .then(res => setSavedMovies(res))
-    .catch(err=> console.log(err))
-    .finally(setPreloader(true))
-  }, [savedMovies, setPreloader])
+    api
+      .getSavedMovies()
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('savedMovies', JSON.stringify(res));
+          setSavedMovies(res);
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(setPreloader(true))
+  }, [setPreloader]);
   return (
     <>
       <main className='saved-movies'>
         <SearchForm />
-        <MoviesCardList movies={savedMovies}/>
+        <MoviesCardList movies={savedMovies} />
       </main>
     </>
   );

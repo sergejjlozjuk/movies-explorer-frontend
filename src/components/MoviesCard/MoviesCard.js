@@ -4,13 +4,9 @@ import api from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
 
 function MoviesCard({ card }) {
-  const [savedFilms, setSavedFilms] = useState([]);
+  const [savedFilms, setSavedFilms] = useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
   const [savedMovie, setSavedMovie] = useState(false);
   useEffect(() => {
-    api
-      .getSavedMovies()
-      .then((res) => setSavedFilms(res))
-      .catch((err) => console.log(err));
     savedFilms.find((film) => film.movieId === card.id) || card.owner
       ? setSavedMovie(true)
       : setSavedMovie(false);

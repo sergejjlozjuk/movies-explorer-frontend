@@ -114,7 +114,6 @@ class Api {
     }).then(this._getResponse);
   }
   deleteMovie(card) {
-    console.log(card.movieId);
     return this._request(`/movies/${card.movieId || card.id}`, {
       method: 'DELETE',
       headers: {

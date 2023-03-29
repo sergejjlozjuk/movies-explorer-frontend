@@ -7,14 +7,14 @@ import './Movies.css';
 
 function Movies() {
   const [searchError, setSearchError] = useState('');
-  const [filteredFilms, setFilteredFilms] = useState([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [listView, setListView] = useState({ list: 12, more: 3 });
   const [renderedFilms, setRenderedFilms] = useState([]);
-  const [short, setShort] = useState(false);
-  function handlerShort() {
-    setShort(!short);
-  }
+  const [searchParams, setSearchParams] = useState({
+    shortFilm: false,
+    filteredFilms: [],
+    key: '',
+  });
   useEffect(() => {
     window.addEventListener('resize', resizeWindow);
     if (width < 769 && width > 481) {
@@ -28,18 +28,37 @@ function Movies() {
     };
   }, [width]);
   useEffect(() => {
-    moviesApi
-      .get()
-      .then((res) => {
-        localStorage.setItem('films', JSON.stringify(res));
-      })
-      .catch((err) => console.log(err));
-  });
+    const params = JSON.parse(localStorage.getItem('searchParams'));
+    if (params) {
+      return setSearchParams(params);
+    } else {
+      setSearchParams({
+        shortFilm: false,
+        filteredFilms: [],
+        key: '',
+      });
+    }
+  }, []);
   useEffect(() => {
-    setRenderedFilms(filteredFilms.slice(0, listView.list));
-  }, [filteredFilms, listView]);
+    setRenderedFilms(searchParams.filteredFilms.slice(0, listView.list));
+    if (searchParams.filteredFilms.length) {
+      localStorage.setItem('searchParams', JSON.stringify(searchParams));
+    }
+  }, [searchParams, listView]);
   function resizeWindow() {
     setWidth(window.innerWidth);
+  }
+  function handlerShort() {
+    setSearchParams({
+      ...searchParams,
+      shortFilm: !searchParams.shortFilm,
+    });
+  }
+  function handleKey(event) {
+    setSearchParams({
+      ...searchParams,
+      key: event.target.value,
+    });
   }
   function handleMoreFilms() {
     setListView({
@@ -50,17 +69,19 @@ function Movies() {
   function handleSubmit(event) {
     event.preventDefault();
     const form = event.target;
-    const key = form.search.value;
-    if (key === '') {
+    if (searchParams.key === '') {
       setSearchError('Нужно ввести ключевое слово');
     } else {
       setSearchError('');
-      moviesApi.search(key, short);
-      const filteredFilms = JSON.parse(localStorage.getItem('filtered'));
-      if (filteredFilms.length === 0) {
+      moviesApi.search(searchParams.key, searchParams.shortFilm);
+      const filtered = JSON.parse(localStorage.getItem('filtered'));
+      if (filtered.length === 0) {
         setSearchError('Ничего не найдено');
       }
-      setFilteredFilms(filteredFilms);
+      setSearchParams({
+        ...searchParams,
+        filteredFilms: filtered,
+      });
     }
     form.reset();
   }
@@ -69,13 +90,14 @@ function Movies() {
       <SearchForm
         onSubmit={handleSubmit}
         handlerShort={handlerShort}
+        handleKey={handleKey}
       ></SearchForm>
       {searchError ? (
         <SearchError error={searchError} />
       ) : (
         <>
           <MoviesCardList movies={renderedFilms} />
-          {listView.list < filteredFilms.length ? (
+          {listView.list < searchParams.filteredFilms.length ? (
             <button className='movies__button-more' onClick={handleMoreFilms}>
               Ещё
             </button>

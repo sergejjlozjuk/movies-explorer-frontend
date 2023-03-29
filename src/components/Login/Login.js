@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import api from '../../utils/MainApi';
 import Formauth from '../Formauth/Formauth';
 import './Login.css';
 
-function Login({ setLogged, setPreloader }) {
+function Login({ setLogged, setPreloader, logged }) {
   const nav = useNavigate();
   const [data, setData] = useState({
     email: '',
@@ -24,19 +24,21 @@ function Login({ setLogged, setPreloader }) {
     api
       .login(data)
       .then((res) => {
-        if(res) {
-          setLogged(true)
+        if (res) {
+          setLogged(true);
           nav('/movies');
         }
       })
       .catch((err) => {
-        if(err === 401) {
-          formError.textContent = 'Неверный Email или пароль'
+        if (err === 401) {
+          formError.textContent = 'Неверный Email или пароль';
         }
       })
-      .finally(setPreloader(true))
+      .finally(setPreloader(true));
   }
-  return (
+  return logged ? (
+    <Navigate to={'/'} replace/>
+  ) : (
     <section className='login'>
       <h1 className='login__title'>Рады видеть!</h1>
       <Formauth
