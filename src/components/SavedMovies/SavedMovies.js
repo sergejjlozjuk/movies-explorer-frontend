@@ -3,6 +3,7 @@ import MoviesCardList from '../MoviesCardList/MovieseCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import api from '../../utils/MainApi';
+import { SHORT_FILM_DURATION } from '../../constants/constants';
 
 function SavedMovies({ setPreloader }) {
   const [savedMovies, setSavedMovies] = useState([]);
@@ -31,7 +32,7 @@ function SavedMovies({ setPreloader }) {
         movie.nameEN.toLowerCase().includes(searchParams.key)
     );
     if(searchParams.shortSwitcher){
-      filtered = filtered.filter((movie) => movie.duration < 40)
+      filtered = filtered.filter((movie) => movie.duration < SHORT_FILM_DURATION)
     } setSavedMovies(filtered)
   }
   function handleShort() {

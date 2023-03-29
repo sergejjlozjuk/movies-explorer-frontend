@@ -1,3 +1,5 @@
+import { SHORT_FILM_DURATION } from "../constants/constants";
+
 class MoviesApi {
   _getResponse(res) {
     if (res.ok) {
@@ -21,7 +23,7 @@ class MoviesApi {
         movie.nameEN.toLowerCase().includes(key.toLowerCase())
     );
     if (short) {
-      filteredFilms = filteredFilms.filter((film) => film.duration < 40);
+      filteredFilms = filteredFilms.filter((film) => film.duration < SHORT_FILM_DURATION);
     }
     localStorage.setItem('filtered', JSON.stringify(filteredFilms));
   }

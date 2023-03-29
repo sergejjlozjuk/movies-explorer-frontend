@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+import {
+  RENDERED_CARDS_WIDTH_1280,
+  RENDERED_CARDS_WIDTH_320,
+  RENDERED_CARDS_WIDTH_768,
+} from '../../constants/constants';
 import moviesApi from '../../utils/MoviesApi';
 import MoviesCardList from '../MoviesCardList/MovieseCardList';
 import SearchError from '../SearchError/SearchError';
@@ -8,7 +13,10 @@ import './Movies.css';
 function Movies() {
   const [searchError, setSearchError] = useState('');
   const [width, setWidth] = useState(window.innerWidth);
-  const [listView, setListView] = useState({ list: 12, more: 3 });
+  const [listView, setListView] = useState({
+    list: RENDERED_CARDS_WIDTH_1280.default,
+    more: RENDERED_CARDS_WIDTH_1280.more,
+  });
   const [renderedFilms, setRenderedFilms] = useState([]);
   const [searchParams, setSearchParams] = useState({
     shortFilm: false,
@@ -18,10 +26,16 @@ function Movies() {
   useEffect(() => {
     window.addEventListener('resize', resizeWindow);
     if (width < 769 && width > 481) {
-      setListView({ list: 8, more: 2 });
+      setListView({
+        list: RENDERED_CARDS_WIDTH_768.default,
+        more: RENDERED_CARDS_WIDTH_768.more,
+      });
     }
     if (width < 481 && width > 319) {
-      setListView({ list: 5, more: 1 });
+      setListView({
+        list: RENDERED_CARDS_WIDTH_320.default,
+        more: RENDERED_CARDS_WIDTH_320.more,
+      });
     }
     return () => {
       window.removeEventListener('resize', resizeWindow);
