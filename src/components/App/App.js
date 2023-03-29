@@ -58,6 +58,7 @@ function App() {
                   setLogged={setLogged}
                   logged={logged}
                   element={ProfileLayout}
+                  setPreloader={setPreloader}
                 />
               }
             />

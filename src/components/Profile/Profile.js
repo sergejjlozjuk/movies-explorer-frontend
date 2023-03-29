@@ -5,12 +5,12 @@ import api from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../HOC/AuthProvider';
 
-function Profile({ setLogged }) {
+function Profile({ setLogged, setPreloader }) {
   const { user, signout, setNewUser } = useContext(AuthContext);
   const [data, setData] = useState({
-    name: '',
-    email: ''
-  })
+    name: user.name,
+    email: user.email,
+  });
   const nav = useNavigate();
   useEffect(() => {
     const validation = new FormValidation();
@@ -19,12 +19,12 @@ function Profile({ setLogged }) {
       validation.disableValidation();
     };
   }, []);
-  function getValue (event){
-    const { name, value} = event.target
+  function getValue(event) {
+    const { name, value } = event.target;
     setData({
       ...data,
-      [name]:value
-    })
+      [name]: value,
+    });
   }
   function handleLoguot() {
     api
@@ -37,26 +37,34 @@ function Profile({ setLogged }) {
       })
       .catch((err) => console.log(err));
   }
-  function handleSubmit(event){
-    event.preventDefault()
-    const form = event.target
-    const formError = form.querySelector('.profile__form-error')
-    if(data.email === user.email){
-      formError.textContent = 'Этот Email уже занят'
-    } api.updateUser(data)
-    .then(res => {
-      if(res){
-        setNewUser(res)
-        form.reset()
-        formError.textContent = 'Данные изменены'
-      }
-    })
-    .catch(err =>{
-      console.log(err)
-      if(err === 409) {
-        formError.textContent = 'Этот Email уже занят'
-      }
-    })
+  function handleSubmit(event) {
+    event.preventDefault();
+    setPreloader(false);
+    const form = event.target;
+    const inputList = Array.from(form.getElementsByTagName('input'));
+    inputList.forEach((input) => (input.disabled = true));
+    const formError = form.querySelector('.profile__form-error');
+    if (data.email === user.email && data.name === user.name) {
+      return (formError.textContent = 'Email и Имя не были изменены');
+    }
+    api
+      .updateUser(data)
+      .then((res) => {
+        if (res) {
+          setNewUser(res);
+          formError.textContent = 'Данные изменены';
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err === 409) {
+          formError.textContent = 'Этот Email уже занят';
+        }
+      })
+      .finally(() => {
+        inputList.forEach((input) => (input.disabled = false));
+        setPreloader(true);
+      });
   }
   return (
     <section className='profile'>
@@ -70,7 +78,7 @@ function Profile({ setLogged }) {
             pattern='[A-Za-zА-Яа-яЁё\s\-]{3,30}'
             name='name'
             onChange={getValue}
-            required
+            value={data.name}
           ></input>
           <span id='name' className='profile__form__input-error'></span>
         </label>
@@ -84,12 +92,14 @@ function Profile({ setLogged }) {
             pattern='.+@[A-Za-z]*\.[a-z]{2,4}'
             name='email'
             onChange={getValue}
-            required
+            value={data.email}
           ></input>
           <span id='email' className='profile__form__input-error'></span>
         </label>
         <span className='profile__form-error'></span>
-        <button className='profile__form__submit' type='submit'>Редактировать</button>
+        <button className='profile__form__submit' type='submit'>
+          Редактировать
+        </button>
       </form>
       <button className='profile__link' onClick={handleLoguot}>
         Выйти из аккаунта

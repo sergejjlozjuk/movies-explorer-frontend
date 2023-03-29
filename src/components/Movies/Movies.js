@@ -68,7 +68,6 @@ function Movies() {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    const form = event.target;
     if (searchParams.key === '') {
       setSearchError('Нужно ввести ключевое слово');
     } else {
@@ -83,7 +82,6 @@ function Movies() {
         filteredFilms: filtered,
       });
     }
-    form.reset();
   }
   return (
     <main className='movies'>
