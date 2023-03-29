@@ -48,7 +48,7 @@ function Movies() {
   function resizeWindow() {
     setWidth(window.innerWidth);
   }
-  function handlerShort() {
+  function handleShort() {
     setSearchParams({
       ...searchParams,
       shortFilm: !searchParams.shortFilm,
@@ -87,7 +87,7 @@ function Movies() {
     <main className='movies'>
       <SearchForm
         onSubmit={handleSubmit}
-        handlerShort={handlerShort}
+        handleShort={handleShort}
         handleKey={handleKey}
       ></SearchForm>
       {searchError ? (

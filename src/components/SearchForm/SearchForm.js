@@ -3,7 +3,7 @@ import search from '../../images/search.svg';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function SearchForm({ formName, onSubmit, handlerShort, handleKey }) {
+function SearchForm({ formName, onSubmit, handleShort, handleKey }) {
   const location = useLocation();
   useEffect(() => {
     if ((location.pathname === '/movies')) {
@@ -28,7 +28,7 @@ function SearchForm({ formName, onSubmit, handlerShort, handleKey }) {
       <div className='checkbox'>
         <span className='checkbox__title'>Короткометражки</span>
         <label className='checkbox__toggle'>
-          <input type='checkbox' name='short' onClick={handlerShort} />
+          <input type='checkbox' name='short' onClick={handleShort} />
           <span className='slider round'></span>
         </label>
       </div>

@@ -6,8 +6,12 @@ import api from '../../utils/MainApi';
 
 function SavedMovies({ setPreloader }) {
   const [savedMovies, setSavedMovies] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    key: '',
+    shortSwitcher: false,
+  });
   useEffect(() => {
-    setPreloader(false)
+    setPreloader(false);
     api
       .getSavedMovies()
       .then((res) => {
@@ -17,12 +21,39 @@ function SavedMovies({ setPreloader }) {
         }
       })
       .catch((err) => console.log(err))
-      .finally(setPreloader(true))
+      .finally(setPreloader(true));
   }, [setPreloader]);
+  function handeleSearch(event) {
+    event.preventDefault();
+    let filtered = savedMovies.filter(
+      (movie) =>
+        movie.nameRU.toLowerCase().includes(searchParams.key) ||
+        movie.nameEN.toLowerCase().includes(searchParams.key)
+    );
+    if(searchParams.shortSwitcher){
+      filtered = filtered.filter((movie) => movie.duration < 40)
+    } setSavedMovies(filtered)
+  }
+  function handleShort() {
+    setSearchParams({
+      ...searchParams,
+      shortSwitcher: !searchParams.shortSwitcher,
+    });
+  }
+  function handleKey(event) {
+    setSearchParams({
+      ...searchParams,
+      key: event.target.value.toLowerCase(),
+    });
+  }
   return (
     <>
       <main className='saved-movies'>
-        <SearchForm />
+        <SearchForm
+          onSubmit={handeleSearch}
+          handleKey={handleKey}
+          handleShort={handleShort}
+        />
         <MoviesCardList movies={savedMovies} />
       </main>
     </>
