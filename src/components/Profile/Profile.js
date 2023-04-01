@@ -26,6 +26,10 @@ function Profile({ setLogged, setPreloader }) {
       [name]: value,
     });
   }
+  function disableSubmit(submit) {
+    submit.classList.add('submit_disable');
+    submit.disabled = true;
+  }
   function handleLoguot() {
     api
       .logout()
@@ -41,10 +45,15 @@ function Profile({ setLogged, setPreloader }) {
     event.preventDefault();
     setPreloader(false);
     const form = event.target;
+    const submit = form.querySelector('button');
     const inputList = Array.from(form.getElementsByTagName('input'));
     inputList.forEach((input) => (input.disabled = true));
     const formError = form.querySelector('.profile__form-error');
     if (data.email === user.email && data.name === user.name) {
+      setPreloader(true);
+      disableSubmit(submit);
+      inputList.forEach((input) => (input.disabled = false));
+      formError.classList.remove('success');
       return (formError.textContent = 'Email и Имя не были изменены');
     }
     api
@@ -53,16 +62,19 @@ function Profile({ setLogged, setPreloader }) {
         if (res) {
           setNewUser(res);
           formError.textContent = 'Данные изменены';
+          formError.classList.add('success');
         }
       })
       .catch((err) => {
         console.log(err);
         if (err === 409) {
+          formError.classList.remove('success');
           formError.textContent = 'Этот Email уже занят';
         }
       })
       .finally(() => {
         inputList.forEach((input) => (input.disabled = false));
+        disableSubmit(submit);
         setPreloader(true);
       });
   }
