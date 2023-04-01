@@ -12,6 +12,16 @@ function SavedMovies({ logged }) {
     key: '',
     shortSwitcher: false,
   });
+  function deletefilm (card) {
+    setSavedMovies(
+      savedMovies.filter(film => {
+        return film._id !== card._id
+      })
+    )
+  }
+  useEffect(()=>{
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies))
+  })
   useEffect(() => {
     api
       .getSavedMovies()
@@ -59,7 +69,7 @@ function SavedMovies({ logged }) {
           handleKey={handleKey}
           handleShort={handleShort}
         />
-        <MoviesCardList movies={filtered.length ? filtered : savedMovies} />
+        <MoviesCardList movies={filtered.length ? filtered : savedMovies} deletefilm={deletefilm}/>
       </main>
     </>
   );

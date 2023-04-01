@@ -2,7 +2,7 @@ import './MoviesCard.css';
 import api from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
 
-function MoviesCard({ card }) {
+function MoviesCard({ card, deletefilm }) {
   const [savedFilms, setSavedFilms] = useState(
     JSON.parse(localStorage.getItem('savedMovies')) || []
   );
@@ -28,6 +28,7 @@ function MoviesCard({ card }) {
         .then((res) => {
           if (res) {
             setSavedMovie(!savedMovie);
+            deletefilm(card)
           }
         })
         .catch((err) => console.log(err));
