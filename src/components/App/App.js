@@ -45,6 +45,16 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, [logged]);
+  useEffect(() => {
+    api
+      .getSavedMovies()
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('savedMovies', JSON.stringify(res));
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [logged]);
   return (
     <>
       <Preloader hidden={preloader} />

@@ -2,28 +2,17 @@ import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MovieseCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
-import api from '../../utils/MainApi';
 import { SHORT_FILM_DURATION } from '../../constants/constants';
 
-function SavedMovies({ setPreloader }) {
+function SavedMovies() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchParams, setSearchParams] = useState({
     key: '',
     shortSwitcher: false,
   });
   useEffect(() => {
-    setPreloader(false);
-    api
-      .getSavedMovies()
-      .then((res) => {
-        if (res) {
-          localStorage.setItem('savedMovies', JSON.stringify(res));
-          setSavedMovies(res);
-        }
-      })
-      .catch((err) => console.log(err))
-      .finally(setPreloader(true));
-  }, [setPreloader]);
+    setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')))
+  }, []);
   function handeleSearch(event) {
     event.preventDefault();
     let filtered = savedMovies.filter(
