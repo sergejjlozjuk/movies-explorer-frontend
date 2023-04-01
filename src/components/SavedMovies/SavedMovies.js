@@ -6,6 +6,7 @@ import { SHORT_FILM_DURATION } from '../../constants/constants';
 
 function SavedMovies() {
   const [savedMovies, setSavedMovies] = useState([]);
+  const [filtered, setFiltered] = useState([])
   const [searchParams, setSearchParams] = useState({
     key: '',
     shortSwitcher: false,
@@ -22,7 +23,7 @@ function SavedMovies() {
     );
     if(searchParams.shortSwitcher){
       filtered = filtered.filter((movie) => movie.duration < SHORT_FILM_DURATION)
-    } setSavedMovies(filtered)
+    } setFiltered(filtered)
   }
   function handleShort() {
     setSearchParams({
@@ -44,7 +45,7 @@ function SavedMovies() {
           handleKey={handleKey}
           handleShort={handleShort}
         />
-        <MoviesCardList movies={savedMovies} />
+        <MoviesCardList movies={filtered.length ? filtered : savedMovies} />
       </main>
     </>
   );
