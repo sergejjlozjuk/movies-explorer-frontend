@@ -40,7 +40,9 @@ function App() {
       .get()
       .then((res) => {
         if (res) {
-          localStorage.setItem('films', JSON.stringify(res));
+          if (logged) {
+            localStorage.setItem('films', JSON.stringify(res));
+          }
         }
       })
       .catch((err) => console.log(err));
