@@ -52,7 +52,9 @@ function App() {
       .getSavedMovies()
       .then((res) => {
         if (res) {
-          localStorage.setItem('savedMovies', JSON.stringify(res));
+          if (logged) {
+            localStorage.setItem('savedMovies', JSON.stringify(res));
+          }
         }
       })
       .catch((err) => console.log(err));
