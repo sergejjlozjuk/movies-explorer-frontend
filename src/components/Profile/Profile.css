@@ -109,6 +109,9 @@
     background: none;
     border: none;
 }
+.success{
+    color: green;
+}
 
 @media screen and (max-width: 768px) {
     .profile {

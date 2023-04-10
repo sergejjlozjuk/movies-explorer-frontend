@@ -3,7 +3,7 @@ import search from '../../images/search.svg';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function SearchForm({ formName, onSubmit, handleShort, handleKey }) {
+function SearchForm({ formName, onSubmit, handleShort, handleKey, searchKey }) {
   const location = useLocation();
   useEffect(() => {
     if ((location.pathname === '/movies')) {
@@ -20,6 +20,7 @@ function SearchForm({ formName, onSubmit, handleShort, handleKey }) {
           placeholder='Фильм'
           name='search'
           onChange={handleKey}
+          value={searchKey}
         ></input>
         <button className='form__button' type='submit'>
           <img className='from__button_icon' src={search} alt='search' />

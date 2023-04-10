@@ -103,6 +103,7 @@ function Movies() {
         onSubmit={handleSubmit}
         handleShort={handleShort}
         handleKey={handleKey}
+        searchKey={searchParams.key}
       ></SearchForm>
       {searchError ? (
         <SearchError error={searchError} />

@@ -40,7 +40,21 @@ function App() {
       .get()
       .then((res) => {
         if (res) {
-          localStorage.setItem('films', JSON.stringify(res));
+          if (logged) {
+            localStorage.setItem('films', JSON.stringify(res));
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [logged]);
+  useEffect(() => {
+    api
+      .getSavedMovies()
+      .then((res) => {
+        if (res) {
+          if (logged) {
+            localStorage.setItem('savedMovies', JSON.stringify(res));
+          }
         }
       })
       .catch((err) => console.log(err));

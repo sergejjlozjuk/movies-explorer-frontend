@@ -2,28 +2,39 @@ import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MovieseCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
-import api from '../../utils/MainApi';
 import { SHORT_FILM_DURATION } from '../../constants/constants';
+import api from '../../utils/MainApi';
 
-function SavedMovies({ setPreloader }) {
+function SavedMovies({ logged }) {
   const [savedMovies, setSavedMovies] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [searchParams, setSearchParams] = useState({
     key: '',
     shortSwitcher: false,
   });
+  function deletefilm (card) {
+    setSavedMovies(
+      savedMovies.filter(film => {
+        return film._id !== card._id
+      })
+    )
+  }
+  useEffect(()=>{
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies))
+  })
   useEffect(() => {
-    setPreloader(false);
     api
       .getSavedMovies()
       .then((res) => {
         if (res) {
-          localStorage.setItem('savedMovies', JSON.stringify(res));
-          setSavedMovies(res);
+          if (logged) {
+            localStorage.setItem('savedMovies', JSON.stringify(res));
+            setSavedMovies(res);
+          }
         }
       })
-      .catch((err) => console.log(err))
-      .finally(setPreloader(true));
-  }, [setPreloader]);
+      .catch((err) => console.log(err));
+  }, [logged]);
   function handeleSearch(event) {
     event.preventDefault();
     let filtered = savedMovies.filter(
@@ -31,9 +42,12 @@ function SavedMovies({ setPreloader }) {
         movie.nameRU.toLowerCase().includes(searchParams.key) ||
         movie.nameEN.toLowerCase().includes(searchParams.key)
     );
-    if(searchParams.shortSwitcher){
-      filtered = filtered.filter((movie) => movie.duration < SHORT_FILM_DURATION)
-    } setSavedMovies(filtered)
+    if (searchParams.shortSwitcher) {
+      filtered = filtered.filter(
+        (movie) => movie.duration < SHORT_FILM_DURATION
+      );
+    }
+    setFiltered(filtered);
   }
   function handleShort() {
     setSearchParams({
@@ -55,7 +69,7 @@ function SavedMovies({ setPreloader }) {
           handleKey={handleKey}
           handleShort={handleShort}
         />
-        <MoviesCardList movies={savedMovies} />
+        <MoviesCardList movies={filtered.length ? filtered : savedMovies} deletefilm={deletefilm}/>
       </main>
     </>
   );
